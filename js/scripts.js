@@ -66,3 +66,14 @@ var socket = new WebSocket('ws://emsbot.me:8001');
             var message = relayIndex + '_' + action;
             socket.send(message);
         }
+
+
+socket.onopen = function(event) {
+    console.log('WebSocket connection established.');
+    // Additional initialization or setup can be done here
+};
+
+socket.onerror = function(error) {
+    console.error('WebSocket error:', error);
+    // Handle WebSocket connection errors here
+};
