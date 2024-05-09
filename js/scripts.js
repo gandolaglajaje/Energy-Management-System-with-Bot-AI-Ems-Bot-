@@ -58,42 +58,11 @@ rateInput.addEventListener('input', function() {
     }
 });
 
-// Establish WebSocket connection
-var socket = new WebSocket('ws://emsbot.me:8001');
+var socket = new WebSocket('ws://0.tcp.ap.ngrok.io:11627');
 
-// Function to send toggle command to Raspberry Pi
-function toggleRelay(relayIndex, isChecked) {
-    // Check if WebSocket connection is open
-    if (socket.readyState === WebSocket.OPEN) {
-        var action = isChecked ? 'on' : 'off';
-        var message = relayIndex + '_' + action;
-        socket.send(message);
-    } else {
-        console.error('WebSocket connection is not open.');
-        // Handle this case gracefully (e.g., notify the user, retry later, etc.)
-    }
-}
-
-// Event handler when WebSocket connection is opened
-socket.onopen = function(event) {
-    console.log('WebSocket connection established.');
-    // Additional initialization or setup can be done here
-};
-
-// Event handler for WebSocket errors
-socket.onerror = function(error) {
-    console.error('WebSocket error:', error);
-    // Handle WebSocket connection errors here
-};
-
-// Event handler for WebSocket messages (optional)
-socket.onmessage = function(event) {
-    console.log('Message from server:', event.data);
-    // Handle incoming messages from the server if needed
-};
-
-// Event handler when WebSocket connection is closed (optional)
-socket.onclose = function(event) {
-    console.log('WebSocket connection closed:', event);
-    // Handle WebSocket connection closed event if needed
-};
+        // Function to send toggle command to Raspberry Pi
+        function toggleRelay(relayIndex, isChecked) {
+            var action = isChecked ? 'on' : 'off';
+            var message = relayIndex + '_' + action;
+            socket.send(message);
+        }
