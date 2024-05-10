@@ -58,11 +58,36 @@ rateInput.addEventListener('input', function() {
     }
 });
 
-var socket = new WebSocket('wss://b27bec4b3b9742fcb4c22ea1c1262d7c.s1.eu.hivemq.cloud:8884/mqtt');
+var client = new Paho.MQTT.Client("b27bec4b3b9742fcb4c22ea1c1262d7c.s1.eu.hivemq.cloud", Number(8884), "web_" + parseInt(Math.random() * 100, 10));
 
-        // Function to send toggle command to Raspberry Pi
+        client.onMessageArrived = function(message) {
+            console.log("Message Arrived:", message.payloadString);
+            // Handle relay status updates here
+            var topic = message.destinationName;
+            var payload = message.payloadString;
+
+            // Extract relay index from topic
+            var relayIndex = parseInt(topic.split('/')[2]); // Assuming topic format is like 'raspberrypi/relay/1'
+
+            // Update checkbox based on relay status
+            var checkbox = document.getElementById('relay' + (relayIndex + 1));
+            checkbox.checked = (payload === 'on');
+        };
+
+        function onConnect() {
+            console.log("Connected to MQTT broker");
+            client.subscribe("raspberrypi/relay/#");
+        }
+
         function toggleRelay(relayIndex, isChecked) {
             var action = isChecked ? 'on' : 'off';
             var message = relayIndex + '_' + action;
-            socket.send(message);
+            client.send("raspberrypi/relay/control", message);
         }
+
+        client.connect({
+            onSuccess: onConnect,
+            userName: "rrioja.work@gmail.com",
+            password: "Rioja@12345",
+            useSSL: true
+        });
