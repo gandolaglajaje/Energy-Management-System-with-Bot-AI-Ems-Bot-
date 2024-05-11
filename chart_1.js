@@ -3,7 +3,7 @@ let myChart1; // Store chart instance
 // Fetch data from Google Sheets
 async function fetchData1() {
 
-  const API_KEY = 'AIzaSyDyJ7gWMnvdBtmgmtwjf4Kovy-MX3prQKo';
+  const API_KEY = 'AIzaSyANj5vggyDBnLCAoQePmkABzMy76biS3Yo';
   const SPREADSHEET_ID = '1ISIsp_qHlT_KdmBycDXPHYB-58ShEhiDVJ518xAJlGQ';
   const SHEET_NAME = 'Outlet 1';
   const RANGE = '!A:L'; 
