@@ -59,7 +59,7 @@ function fetchDataForAllQueries() {
 // Call fetchDataForAllQueries initially
 fetchDataForAllQueries();
 
-// Call fetchDataForAllQueries every 24 seconds
+// Call fetchDataForAllQueries every 60 seconds
 setInterval(fetchDataForAllQueries, 60000);
 
 console.log('API.js loaded');
