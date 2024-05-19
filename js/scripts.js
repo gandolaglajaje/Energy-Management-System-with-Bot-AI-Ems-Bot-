@@ -163,7 +163,7 @@ function toggleRelay(relayNumber, isChecked) {
 // Function to send command to Raspberry Pi via MQTT
 function sendCommand(command) {
     var clientId = "web_" + parseInt(Math.random() * 100, 10);
-    var mqttClient = new Paho.MQTT.Client("b27bec4b3b9742fcb4c22ea1c1262d7c.s1.eu.hivemq.cloud", 8884, clientId);
+    var mqttClient = new Paho.MQTT.Client("d6a658dae88e478990a76c75f2d2a635.s1.eu.hivemq.cloud", 8884, clientId);
 
     mqttClient.onConnectionLost = function (responseObject) {
         if (responseObject.errorCode !== 0) {
