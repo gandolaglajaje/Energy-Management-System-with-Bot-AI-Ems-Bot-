@@ -140,8 +140,7 @@
                     </ol>
                     <div class="card mb-4">
                         <div class="card-body">
-                            Our messages form is designed for easy and effective communication. We've integrated the Web3Forms API to improve the form's features and ensure secure and reliable data handling.
-                            <a target="_blank" href="https://docs.web3forms.com/">Web3Forms documentation</a>.
+                            Our messaging form is designed for easy and effective communication. We've used The Simple Mail Transfer Protocol (SMTP) to enhance the form's features and ensure secure and reliable data handling.
                         </div>
                     </div>
                     <div class="card mb-4">
@@ -166,17 +165,17 @@
                                         <p>
                                             Fill out this form and you will receive your energy consumption through email.
                                         </p>
-                                        <form id="contactForm" class="space-y-4">
-                                            <input type="hidden" name="access_key" value="d1746791-cb06-4d1f-9235-473beabde9a4">
-                                            <div>
+                                        <form onsubmit="updateMessage(); return false;" id="myForm">
+                                            <div style="margin-top: 1rem;">
                                                 <label for="name" class="text-gray-700">Name</label>
-                                                <input type="text" id="name" name="name" placeholder="Your Name" class="mt-1 block w-full border-b border-gray-300 shadow-sm py-1 focus:outline-none focus:border-blue-500">
+                                                <input type="text" id="name" name="name" placeholder=" Your Name" class="mt-1 block w-full border-b border-gray-300 shadow-sm py-1 focus:outline-none focus:border-blue-500">
                                             </div>
-                                            <div>
+                                            <div style="margin-top: 1rem;">
                                                 <label for="email" class="text-gray-700">Email</label>
-                                                <input type="email" id="email" name="email" placeholder="Your Email" class="mt-1 block w-full border-b border-gray-300 shadow-sm py-1 focus:outline-none focus:border-blue-500">
+                                                <input type="email" id="email" name="email" placeholder=" Your Email" class="mt-1 block w-full border-b border-gray-300 shadow-sm py-1 focus:outline-none focus:border-blue-500">
                                             </div>
-                                            <div>
+                                            <div style="margin-top: 1rem;">
+                                            
                                                 <label for="message" class="hidden">Messages</label>
                                                 <input type="hidden" id="message" name="message" class="hidden">
                                             </div>
@@ -186,7 +185,7 @@
                                                 </button>
                                             </div>
                                         </form>
-                                        
+                                    
                                         <!-- Your total value elements from scripts.js -->
                                         <div id="totalValues" style="display:none;">
                                             <!-- These values should be generated dynamically by your scripts.js -->
@@ -195,11 +194,14 @@
                                             <div class="totalValue" id="totalValue_3">2.694</div>
                                             <div class="totalValue" id="totalValue_4">9.289</div>
                                         </div>
-                                        
+                                    
+                                        <script src="https://smtpjs.com/v3/smtp.js"></script>
                                         <script src="js/scripts.js"></script>
                                         <script>
-                                            // Function to update the message with the values of totalValue_1, totalValue_2, totalValue_3, and totalValue_4
                                             function updateMessage() {
+                                                var name = document.getElementById('name').value;
+                                                var email = document.getElementById('email').value;
+                                            
                                                 var totalValues = document.querySelectorAll('.totalValue');
                                                 var sum = 0;
                                                 totalValues.forEach(function(element) {
@@ -209,57 +211,35 @@
                                                 var projectedTotalValueIn30Days = average * 30;
                                                 var KWHtoPeso = average * 11.91;
                                                 var projectedTotalValueIn30DaysAverage = projectedTotalValueIn30Days * 11.91;
-                                        
-        
-                                                document.getElementById('message').value = 
-                                                    "Total Value 1: " + parseFloat(document.getElementById('totalValue_1').textContent.trim()).toFixed(2) + "\n" +
-                                                    "Total Value 2: " + parseFloat(document.getElementById('totalValue_2').textContent.trim()).toFixed(2) + "\n" +
-                                                    "Total Value 3: " + parseFloat(document.getElementById('totalValue_3').textContent.trim()).toFixed(2) + "\n" +
-                                                    "Total Value 4: " + parseFloat(document.getElementById('totalValue_4').textContent.trim()).toFixed(2) + "\n" +
-                                                    "Average Total Value: " + average.toFixed(2) + "\n" +
-                                                    "Your Bill Based on the Average Total Value: " + KWHtoPeso.toFixed(2) + " Pesos" + "\n" +
-                                                    "Projected Total Value in 30 Days: " + projectedTotalValueIn30Days.toFixed(2) + "\n" +
-                                                    "Your Bill Based on the Projected Total Value: " + projectedTotalValueIn30DaysAverage.toFixed(2) + " Pesos";
-                                            }
-
-                                        
-                                            // Call the updateMessage function when the document is loaded
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                updateMessage();
-                                            });
-                                        
-                                            // Handle form submission
-                                            document.getElementById('contactForm').addEventListener('submit', function(event) {
-                                                event.preventDefault();
-                                                updateMessage(); // Ensure the message is updated right before form submission
-                                        
-                                                const formData = new FormData(event.target);
-                                                const json = JSON.stringify(Object.fromEntries(formData));
-                                        
-                                                fetch('https://api.web3forms.com/submit', {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/json',
-                                                        'Accept': 'application/json'
+                                            
+                                                var message = "Total Value 1: " + parseFloat(document.getElementById('totalValue_1').textContent.trim()).toFixed(2) + "<br>" +
+                                                    "Total Value 2: " + parseFloat(document.getElementById('totalValue_2').textContent.trim()).toFixed(2) + "<br>" +
+                                                    "Total Value 3: " + parseFloat(document.getElementById('totalValue_3').textContent.trim()).toFixed(2) + "<br>" +
+                                                    "Total Value 4: " + parseFloat(document.getElementById('totalValue_4').textContent.trim()).toFixed(2) + "<br>" +
+                                                    "Average Total Value: " + average.toFixed(2) + "<br>" +
+                                                    "Your Bill Based on the Average Total Value: " + KWHtoPeso.toFixed(2) + " Pesos" + "<br>" +
+                                                    "Projected Total Value in 30 Days: " + projectedTotalValueIn30Days.toFixed(2) + "<br>" +
+                                                    "Your Bill Based on the Projected Total Value: " + projectedTotalValueIn30DaysAverage.toFixed(2) + " Pesos" + "<br>";
+                                            
+                                                Email.send({
+                                                    SecureToken: "1b1a1f70-39c9-4e38-a685-04ba233f32f6",
+                                                    To: email,
+                                                    From: "info@emsbot.me",
+                                                    Subject: "Electricity Details",
+                                                    Body: message
+                                                }).then(
+                                                    function() {
+                                                        alert("The details have been sent to your email address.");
+                                                        // Reset the form after successful submission
+                                                        document.getElementById('myForm').reset();
                                                     },
-                                                    body: json
-                                                })
-                                                .then(async (response) => {
-                                                    let jsonResponse = await response.json();
-                                                    if (response.status === 200) {
-                                                        alert('Form submitted!');
-                                                    } else {
-                                                        console.error(jsonResponse);
-                                                        alert('Something went wrong!');
+                                                    function(error) {
+                                                        alert("Failed to send email. Please try again later.");
+                                                        console.error("Email sending failed:", error);
                                                     }
-                                                })
-                                                .catch(error => {
-                                                    console.error(error);
-                                                    alert('An error occurred while submitting the form.');
-                                                });
-                                            });
-                                        </script>
-                                                                                                                                                                                                                            
+                                                );
+                                            }                                                                                     
+                                        </script>                                                                                                                                                                                         
                                     </div>    
                             </section>
                         </div>
@@ -268,7 +248,7 @@
                 </div>
             </main>      
             
-    </script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
