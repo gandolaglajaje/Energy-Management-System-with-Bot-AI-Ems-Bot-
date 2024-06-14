@@ -193,17 +193,17 @@
                                                     sum += parseFloat(element.textContent.trim());
                                                 });
                                                 var average = sum / totalValues.length;
-                                                var projectedTotalValueIn30Days = average * 30;
-                                                var KWHtoPeso = average * 11.91;
+                                                var projectedTotalValueIn30Days = sum * 30;
+                                                var KWHtoPeso = sum * 11.91;
                                                 var projectedTotalValueIn30DaysAverage = projectedTotalValueIn30Days * 11.91;
                                             
-                                                var message = "Total Value 1: " + parseFloat(document.getElementById('totalValue_1').textContent.trim()).toFixed(2) + "<br>" +
-                                                    "Total Value 2: " + parseFloat(document.getElementById('totalValue_2').textContent.trim()).toFixed(2) + "<br>" +
-                                                    "Total Value 3: " + parseFloat(document.getElementById('totalValue_3').textContent.trim()).toFixed(2) + "<br>" +
-                                                    "Total Value 4: " + parseFloat(document.getElementById('totalValue_4').textContent.trim()).toFixed(2) + "<br>" +
-                                                    "Average Total Value: " + average.toFixed(2) + "<br>" +
-                                                    "Your Bill Based on the Average Total Value: " + KWHtoPeso.toFixed(2) + " Pesos" + "<br>" +
-                                                    "Projected Total Value in 30 Days: " + projectedTotalValueIn30Days.toFixed(2) + "<br>" +
+                                                var message = "Total Value Outlet 1: " + parseFloat(document.getElementById('totalValue_1').textContent.trim()).toFixed(2) + "<br>" +
+                                                    "Total Value Outlet 2: " + parseFloat(document.getElementById('totalValue_2').textContent.trim()).toFixed(2) + "<br>" +
+                                                    "Total Value Outlet 3: " + parseFloat(document.getElementById('totalValue_3').textContent.trim()).toFixed(2) + "<br>" +
+                                                    "Total Value Outlet 4: " + parseFloat(document.getElementById('totalValue_4').textContent.trim()).toFixed(2) + "<br>" +
+                                                    "Total Value of all Outlet: " + average.toFixed(2) + " KWH" + "<br>" +
+                                                    "Your Bill Based on the Total Value: " + KWHtoPeso.toFixed(2) + " Pesos" + "<br>" +
+                                                    "Projected Total Value in 30 Days: " + projectedTotalValueIn30Days.toFixed(2) + " KWH" + "<br>" +
                                                     "Your Bill Based on the Projected Total Value: " + projectedTotalValueIn30DaysAverage.toFixed(2) + " Pesos" + "<br>";
                                             
                                                 Email.send({
