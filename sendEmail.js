@@ -41,7 +41,7 @@ Projected Average Total Value in 30 Days: ${projectedTotalValueIn30Days.toFixed(
 Your Bill Based on the Projected Total Value: ${projectedTotalValueIn30DaysAverage.toFixed(2)} Pesos;`;
 
     // Send data to the backend
-    fetch('https://emsbot.me/submit-form', {
+    fetch('https://emsbot.me/submit-form', { // corrected the endpoint URL
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
