@@ -43,7 +43,7 @@ Your Bill Based on the Projected Total Value: ${projectedTotalValueIn30DaysAvera
 
 
     // Send data to the backend
-    fetch('https://emsbot.me/notification.html', {
+    fetch('https://emsbot.me/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
