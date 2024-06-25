@@ -16,7 +16,7 @@ const connectionString = "endpoint=https://emsbotdemo.asiapacific.communication.
 const client = new EmailClient(connectionString);
 
 // POST endpoint to handle form submission
-app.post('/submit-form', async (req, res) => {  // use relative path
+app.post('/api/submit-form', async (req, res) => {
     const { name, email, message } = req.body;
 
     const emailMessage = {
